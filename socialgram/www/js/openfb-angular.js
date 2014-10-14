@@ -71,10 +71,10 @@ angular.module('openfb', [])
             // Check if an explicit oauthRedirectURL has been provided in init(). If not, infer the appropriate value
             if (!oauthRedirectURL) {
                 if (runningInCordova) {
-                    oauthRedirectURL = 'https://www.facebook.com/connect/login_success.html';
+                    oauthRedirectURL = 'https://www.google.com';
                 } else {
                     // Trying to calculate oauthRedirectURL based on the current URL.
-                    var index = document.location.href.indexOf('index.html');
+                    var index = document.location.href.indexOf('#/app');
                     if (index > 0) {
                         oauthRedirectURL = document.location.href.substring(0, index) + 'oauthcallback.html';
                     } else {
@@ -90,6 +90,7 @@ angular.module('openfb', [])
             if (runningInCordova) {
                 loginWindow.addEventListener('loadstart', function (event) {
                     var url = event.url;
+                    console.log(url);
                     if (url.indexOf("access_token=") > 0 || url.indexOf("error=") > 0) {
                         loginWindow.close();
                         oauthCallback(url);
