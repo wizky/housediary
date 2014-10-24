@@ -1,0 +1,22 @@
+<ion-view>
+
+    <ion-content has-header="true" padding="true">
+
+        <div class="list card" >
+            <a class="item item-icon-left item-divider" ng-hide="user" ng-click="facebookLogin()">
+                <i class="icon ion-social-facebook positive"></i>
+                Login with Facebook.
+                use open_dclkcnt_user@tfbnw.net to login, password is 1
+            </a>
+            <div class="item item-divider" ng-show="user" ng-cloak>
+                {{ user }}'s friends
+            </div>
+
+                <li class="item" ng-repeat="friend in friends">
+                    {{ friend }}
+                </li>
+        </div>
+
+    </ion-content>
+
+</ion-view>

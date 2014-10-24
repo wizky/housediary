@@ -1,10 +1,10 @@
-angular.module('housediary.controllers', [])
+angular.module('housediary.controllers', ['openfb'])
 
     .controller('MenuCtrl', function ($scope, $state) {
 
         $scope.menus = [
             {name:'Home', state:'app.home', iconCss:'ion-home'},
-            {name:'Login', state:'app.login', iconCss:'ion-person'}
+            {name:'My Diary', state:'app.login', iconCss:'ion-person'}
         ]
 
     })
@@ -16,20 +16,33 @@ angular.module('housediary.controllers', [])
 
     })
 
-    .controller('LoginCtrl', function ($scope, $location, OpenFB) {
+    .controller('UserHomeControl', function ($scope, $location, OpenFB) {
 
         $scope.facebookLogin = function () {
 
-            OpenFB.login('email,read_stream,publish_stream').then(
+            OpenFB.login('email,read_stream,publish_stream,read_friendlists,user_friends').then(
                 function () {
                     OpenFB.get('/me/?fields=id,email').success(function (user) {
-//                        $scope.user = user;
+                        $scope.user = user;
+                        $scope.findFriends();
                         console.log(JSON.stringify(user))
                     });
-                    $location.path('/app/person/me/feed');
+//                    $location.path('/app/person/me/feed');
                 },
                 function () {
                     alert('OpenFB login failed');
+                });
+
+
+        };
+
+        $scope.findFriends = function () {
+            OpenFB.get('/' + $scope.user.id + '/friends', {limit: 50})
+                .success(function (result) {
+                    $scope.friends = result.data;
+                })
+                .error(function(data) {
+                    alert(data.error.message);
                 });
         };
 

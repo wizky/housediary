@@ -5,7 +5,9 @@
 // the 2nd parameter is an array of 'requires'
 angular.module('housediary', ['ionic','housediary.controllers'])
 
-    .run(function ($rootScope, $ionicPlatform, $state, $window) {
+    .run(function ($rootScope, $ionicPlatform, $state, $window, OpenFB) {
+        OpenFB.init('581957658577189');
+
         $ionicPlatform.ready(function () {
             // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
             // for form inputs)
@@ -53,8 +55,8 @@ angular.module('housediary', ['ionic','housediary.controllers'])
                 url: "/login",
                 views: {
                     'menuContent': {
-                        templateUrl: "views/login.html",
-//                        controller: "LoginCtrl"
+                        templateUrl: "views/userHome.html",
+                        controller: "UserHomeControl"
                     }
                 }
             })
