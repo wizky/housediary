@@ -1,19 +1,15 @@
 angular.module('housediary.controllers', ['openfb'])
 
     .controller('MenuCtrl', function ($scope, $state) {
-
         $scope.menus = [
             {name:'Home', state:'app.home', iconCss:'ion-home'},
             {name:'My Diary', state:'app.login', iconCss:'ion-person'}
         ]
-
     })
 
     .controller('HomeCtrl', function ($scope, $state) {
-
-        $scope.title = "Houzz"
+        $scope.title = "House Diary";
         $scope.content = "House Diary"
-
     })
 
     .controller('UserHomeControl', function ($scope, $location, OpenFB) {
@@ -33,7 +29,6 @@ angular.module('housediary.controllers', ['openfb'])
                     alert('OpenFB login failed');
                 });
 
-
         };
 
         $scope.findFriends = function () {
@@ -46,6 +41,77 @@ angular.module('housediary.controllers', ['openfb'])
                 });
         };
 
+        $scope.yammerLogin = function () {
+            yam.login(null, function(response)
+            {
+                alert(response);
+            });
+        };
+
+        $scope.yammerGetLoginStatus = function() {
+
+            yam.getLoginStatus(
+                function(response) {
+                    $scope.yammerUser = "hello1";
+                    if (response.authResponse) {
+
+                        $scope.yammerUser = response.user;
+//                        $scope.yammerResults = response.authResponse;
+                        console.log("logged in");
+                        $scope.yammerGetRelations();
+//                        yam.platform.request({
+//                            url: "users/current.json",     //this is one of many REST endpoints that are available
+//                            method: "GET",
+//                            data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
+////                                "letter": "a",
+////                                "page": "2",
+//                            },
+//                            success: function (user) { //print message response information to the console
+////                                alert("The request was successful.");
+//                                $scope.yammerUser = response;
+//                                console.dir(user);
+//                            },
+//                            error: function (user) {
+//                                alert("There was an error with the request.");
+//                            }
+//                        });
+                    }
+                    else {
+                        $scope.yammerUser = "hello1";
+                        $scope.yammerLogin(
+                            function()
+                            {
+                                $scope.yammerUser = "hello1";
+                                $scope.yammerGetLoginStatus();
+                            }
+                        );
+//                        alert("not logged in")
+                    }
+                }
+            );
+        };
+
+        $scope.yammerGetRelations = function() {
+
+                        yam.platform.request({
+                            url: "subscriptions",     //this is one of many REST endpoints that are available
+                            method: "GET",
+                            data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
+                                "target_type": "user",
+//                                "page": "2",
+                            },
+                            success: function (user) { //print message response information to the console
+                                console.dir(user);
+                                $scope.yammerFriends = user.subscriptions;
+                                $scope.apply();
+                            },
+                            error: function (user) {
+                                alert("There was an error with the request.");
+                            }
+                        });
+
+
+        };
     })
 
     .controller('ShareCtrl', function ($scope, OpenFB) {
