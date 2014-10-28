@@ -1,4 +1,11 @@
 angular.module('housediary.controllers', ['openfb'])
+    .run(function($http) {
+        $http.defaults.headers.common.Authorization = 'Basic YmVlcDpib29w';
+        //$http.defaults.headers.get.NewHeader = 'afsf';
+    })
+    //.config(function($httpProvider){
+    //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    //})
 
     .controller('MenuCtrl', function ($scope, $state) {
         $scope.menus = [
@@ -12,7 +19,7 @@ angular.module('housediary.controllers', ['openfb'])
         $scope.content = "House Diary"
     })
 
-    .controller('UserHomeControl', function ($scope, $location, OpenFB) {
+    .controller('UserHomeControl', function ($scope, $location, OpenFB, $filter, $q, $http) {
 
         $scope.facebookLogin = function () {
 
@@ -93,25 +100,79 @@ angular.module('housediary.controllers', ['openfb'])
 
         $scope.yammerGetRelations = function() {
 
-                        yam.platform.request({
-                            url: "subscriptions",     //this is one of many REST endpoints that are available
-                            method: "GET",
-                            data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
-                                "target_type": "user",
+            yam.platform.request({
+                url: "subscriptions",     //this is one of many REST endpoints that are available
+                method: "GET",
+                data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
+                    "target_type": "user",
 //                                "page": "2",
-                            },
-                            success: function (user) { //print message response information to the console
-                                console.dir(user);
-                                $scope.yammerFriends = user.subscriptions;
-                                $scope.apply();
-                            },
-                            error: function (user) {
-                                alert("There was an error with the request.");
-                            }
+                },
+                success: function (user) { //print message response information to the console
+                    console.dir(user);
+                    //$scope.yammerFriends = user.subscriptions;
+                    var friends  = $filter('filter')(user.subscriptions, {target_type: 'user'});
+
+                    var tmp = [];
+                    angular.forEach(friends, function(response) {
+                        tmp.push(response.target_id);
+                    });
+
+                    $scope.getAllYammerFriendProfiles(tmp)
+                        .then(
+                        function(data) {
+                            $scope.yammerFriends = data;
+                        },
+                        function(error) {
+                            console.log(error);
+                        },
+                        function(update) {
+                            console.log(update);
                         });
 
+                    $scope.$apply();
+                },
+                error: function (user) {
+                    alert("There was an error with the request.");
+                }
+            });
 
         };
+
+        $scope.getAllYammerFriendProfiles = function(urls)
+        {
+            var deferred = $q.defer();
+
+            var urlCalls = [];
+            angular.forEach(urls, function(url) {
+                urlCalls.push(
+                    yam.platform.request({
+                        //url: "users"+url+".json",     //this is one of many REST endpoints that are available
+                        url: "users/" + url + ".json",
+                        method: "GET"
+//                        data: {    //use the data object literal to specify parameters, as documented in the REST API section of this developer site
+//                            "target_type": "user",
+////                                "page": "2",
+//                        },
+                    }).xhr)
+            });
+
+            // they may, in fact, all be done, but this
+            // executes the callbacks in then, once they are
+            // completely finished.
+            $q.all(urlCalls)
+                .then(
+                function(results) {
+                    deferred.resolve(results)
+                },
+                function(errors) {
+                    deferred.reject(errors);
+                },
+                function(updates) {
+                    deferred.update(updates);
+                });
+            return deferred.promise;
+        };
+
     })
 
     .controller('ShareCtrl', function ($scope, OpenFB) {

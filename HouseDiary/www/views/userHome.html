@@ -30,9 +30,10 @@
                 {{ yammerUser.full_name }}'s friends
             </div>
 
-            <li class="item" ng-repeat="friend in yammerFriends | filter:{target_type: 'user'}">
+            <!--<li class="item" ng-repeat="friend in yammerFriends | filter:{target_type: 'user'}">-->
+            <li class="item" ng-repeat="friend in yammerFriends">
             <!--<li class="item" ng-repeat="friend in yammerFriends">-->
-                {{ friend }}
+                {{ friend.full_name }} {{ friend.stats }}
             </li>
         </div>
 
