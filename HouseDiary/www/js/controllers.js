@@ -49,7 +49,7 @@ angular.module('housediary.controllers', ['openfb'])
         };
 
         $scope.yammerLogin = function () {
-            yam.login(null, function(response)
+            yam.login({loginType: "session"}, function(response)
             {
                 alert(response);
             });
@@ -59,7 +59,6 @@ angular.module('housediary.controllers', ['openfb'])
 
             yam.getLoginStatus(
                 function(response) {
-                    $scope.yammerUser = "hello1";
                     if (response.authResponse) {
 
                         $scope.yammerUser = response.user;
