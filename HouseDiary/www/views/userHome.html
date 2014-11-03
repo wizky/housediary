@@ -37,7 +37,26 @@
             </li>
         </div>
 
+        <div class="list card">
 
+
+            <a class="item item-icon-left item-divider" ng-hide="yammerUser" ng-click="yammerGetLoginStatus()">
+                <img src="img/wechat/login48.png"/>
+                <!--<button class="button" id="yammer-login" ng-click="yammerLogin()">Yammer Login</button>-->
+                <!--<button class="button" id="yammer-login" ng-click="yammerGetLoginStatus()">Get Status</button>-->
+                <!--<button class="button"  ng-click="yammerGetRelations()">Get Relations</button>-->
+            </a>
+
+            <div class="item item-divider" ng-show="yammerUser" >
+                {{ yammerUser.full_name }}'s friends
+            </div>
+
+            <!--<li class="item" ng-repeat="friend in yammerFriends | filter:{target_type: 'user'}">-->
+            <li class="item" ng-repeat="friend in yammerFriends">
+                <!--<li class="item" ng-repeat="friend in yammerFriends">-->
+                {{ friend.full_name }} {{ friend.stats }}
+            </li>
+        </div>
     </ion-content>
 
 </ion-view>
