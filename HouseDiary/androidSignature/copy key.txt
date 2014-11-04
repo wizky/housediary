@@ -1,0 +1,2 @@
+copy debug.keystore to 
+man: ~/.android/debug.keystore
