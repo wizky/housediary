@@ -1,0 +1,7 @@
+{
+    "name": "House Diary",
+    "description": "Sample App with Ionic and Node.js",
+    "repository": "https://github.com/wizky/housediary",
+    "logo": "https://node-js-sample.herokuapp.com/node.svg",
+    "keywords": ["node", "express", "ionic", "directory"]
+}
