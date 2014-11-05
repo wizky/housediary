@@ -1,0 +1,14 @@
+{
+    "applications": {
+        "HouseDiary": {
+            "applicationId": "uGg7cnuAa5zcUhPS15EQdWxSFjjveelc0nsUzkvc", 
+            "masterKey": "ykYolse4ByJUzWnYdMJppVi0Y2hu0NLv7KgXvlJk"
+        }, 
+        "_default": {
+            "link": "HouseDiary"
+        }
+    }, 
+    "global": {
+        "parseVersion": "1.3.0"
+    }
+}
