@@ -15,24 +15,6 @@
                         {
                             "xml": "<feature name=\"InAppBrowser\"><param name=\"android-package\" value=\"org.apache.cordova.inappbrowser.InAppBrowser\" /></feature>",
                             "count": 1
-                        },
-                        {
-                            "xml": "<feature name=\"WeChat\"><param name=\"android-package\" value=\"com.wordsbaking.cordova.wechat.WeChat\" /></feature>",
-                            "count": 1
-                        },
-                        {
-                            "xml": "<preference name=\"wechatappid\" value=\"wx6bac5262a02e91c4\" />",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
-            "AndroidManifest.xml": {
-                "parents": {
-                    "/manifest/application": [
-                        {
-                            "xml": "<activity android:exported=\"true\" android:label=\"@string/launcher_name\" android:name=\".wxapi.WXEntryActivity\"><intent-filter><action android:name=\"android.intent.action.VIEW\" /><category android:name=\"android.intent.category.DEFAULT\" /><data android:scheme=\"wx6bac5262a02e91c4\" /></intent-filter></activity>",
-                            "count": 1
                         }
                     ]
                 }
@@ -44,10 +26,6 @@
             "PACKAGE_NAME": "com.wizky.housediary"
         },
         "org.apache.cordova.inappbrowser": {
-            "PACKAGE_NAME": "com.wizky.housediary"
-        },
-        "com.wordsbaking.cordova.wechat": {
-            "APP_ID": "wx6bac5262a02e91c4",
             "PACKAGE_NAME": "com.wizky.housediary"
         }
     },

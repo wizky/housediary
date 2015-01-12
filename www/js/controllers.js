@@ -265,84 +265,84 @@ angular.module('housediary.controllers', ['openfb'])
         $scope.scenes = [
             {
                 label: "会话",
-                value: 1
+                value: 0
             },
             {
                 label: "朋友圈",
-                value: 3
+                value: 1
             },
-            // {
-            //     label: "收藏",
-            //     value: 2
-            // }
+            {
+                label: "收藏",
+                value: 2
+            }
         ];
 
         $scope.buttons = [
-            // {
-            //     id: "check-installed",
-            //     label: "是否安装了微信"
-            // },
+            {
+                id: "check-installed",
+                label: "是否安装了微信"
+            },
             {
                 id: "send-text",
                 label: "发送Text消息给微信"
             },
-            // {
-            //     id: "send-photo",
-            //     label: "发送Photo消息给微信"
-            // },
+            {
+                id: "send-photo",
+                label: "发送Photo消息给微信"
+            },
             {
                 id: "send-link",
                 label: "发送Link消息给微信"
             },
-            // {
-            //     id: "send-music",
-            //     label: "发送Music消息给微信"
-            // },
-            // {
-            //     id: "send-video",
-            //     label: "发送Video消息给微信"
-            // },
-            // {
-            //     id: "send-app",
-            //     label: "发送App消息给微信"
-            // },
-            // {
-            //     id: "send-nongif",
-            //     label: "发送非gif消息给微信"
-            // },
-            // {
-            //     id: "send-gif",
-            //     label: "发送gif消息给微信"
-            // },
-            // {
-            //     id: "send-file",
-            //     label: "发送文件消息给微信"
-            // },
-            // {
-            //     id: "auth",
-            //     label: "微信授权登录"
-            // },
-            // {
-            //     id: "test-url",
-            //     label: "测试URL长度"
-            // },
-            // {
-            //     id: "open-profile",
-            //     label: "打开Profile"
-            // },
+            {
+                id: "send-music",
+                label: "发送Music消息给微信"
+            },
+            {
+                id: "send-video",
+                label: "发送Video消息给微信"
+            },
+            {
+                id: "send-app",
+                label: "发送App消息给微信"
+            },
+            {
+                id: "send-nongif",
+                label: "发送非gif消息给微信"
+            },
+            {
+                id: "send-gif",
+                label: "发送gif消息给微信"
+            },
+            {
+                id: "send-file",
+                label: "发送文件消息给微信"
+            },
+            {
+                id: "auth",
+                label: "微信授权登录"
+            },
+            {
+                id: "test-url",
+                label: "测试URL长度"
+            },
+            {
+                id: "open-profile",
+                label: "打开Profile"
+            },
 
-            // {
-            //     id: "open-mp",
-            //     label: "打开mp网页"
-            // },
-            // {
-            //     id: "add-card",
-            //     label: "添加单张卡券至卡包"
-            // },
-            // {
-            //     id: "add-cards",
-            //     label: "添加多张卡券至卡包"
-            // }
+            {
+                id: "open-mp",
+                label: "打开mp网页"
+            },
+            {
+                id: "add-card",
+                label: "添加单张卡券至卡包"
+            },
+            {
+                id: "add-cards",
+                label: "添加多张卡券至卡包"
+            }
         ];
 
         $scope.$watch('data.selectedScene', function () {
@@ -354,28 +354,13 @@ angular.module('housediary.controllers', ['openfb'])
         }, true);
 
         $scope.handle = function (id) {
-            var scene = $scope.data.selectedScene;
-            var message;
             var params = {
                 scene: $scope.data.selectedScene
             };
 
-            // WeChat
-            //     .share('文本', WeChat.Scene.session, function () {
-            //         console.log('分享成功~');
-            //     }, function (reason) {
-            //         console.log(reason);
-            //     });
-
             if (id == 'send-text') {
                 params.text = "人文的东西并不是体现在你看得到的方面，它更多的体现在你看不到的那些方面，它会影响每一个功能，这才是最本质的。但是，对这点可能很多人没有思考过，以为人文的东西就是我们搞一个很小清新的图片什么的。”综合来看，人文的东西其实是贯穿整个产品的脉络，或者说是它的灵魂所在。";
-                message = params.text;
             } else {
-                message = {
-                    title: "[TEST]" + id,
-                    description: "[TEST]Sending from test application",
-                    // thumbData: "www/resources/res1thumb.png",
-                }
                 params.message = {
                     title: "[TEST]" + id,
                     description: "[TEST]Sending from test application",
@@ -400,11 +385,9 @@ angular.module('housediary.controllers', ['openfb'])
                         break;
 
                     case 'send-link':
-                        message.url = "http://tech.qq.com/zt2012/tmtdecode/252.htm";
-                        // message.type = WeChat.ShareType.webpage;
-                        // params.message.thumb = "www/resources/res2.png";
-                        // params.message.media.type = Wechat.Type.LINK;
-                        // params.message.media.webpageUrl = "http://tech.qq.com/zt2012/tmtdecode/252.htm";
+                        params.message.thumb = "www/resources/res2.png";
+                        params.message.media.type = Wechat.Type.LINK;
+                        params.message.media.webpageUrl = "http://tech.qq.com/zt2012/tmtdecode/252.htm";
                         break;
 
                     case 'send-music':
@@ -464,10 +447,10 @@ angular.module('housediary.controllers', ['openfb'])
                 }
             }
 
-            WeChat.share(message, scene, function () {
+            Wechat.share(params, function () {
                 alert("Success");
             }, function (reason) {
                 alert("Failed: " + reason);
             });
         };
-    });
+    })
