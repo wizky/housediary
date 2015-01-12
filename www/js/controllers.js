@@ -255,12 +255,21 @@ angular.module('housediary.controllers', ['openfb'])
 
     })
 
-    .controller('DemoCtrl', function ($scope, $ionicPopup) {
+    .controller('DemoCtrl', function ($scope, $ionicPopup, $http) {
 
         $scope.data = {
             selectedScene: 0,
             selectedSceneLabel: "会话"
         };
+
+        $scope.data.authData.codeResponse = {"state":"wechat_sdk_demo_test","lang":"zh_CN","country":"us","code":"021682a365d737ba3259b088799d23bc"};
+        $scope.data.authData.accessTokenResponse = {
+            "access_token": "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDfFsym3Xv80xrRYZqdXnhDX7IRpYpVbDMjIZxkvxaH3ZjzhpmE7vVX6Fw3RR7QqbM8renlmunJH0FB61g-Fa0kA",
+            expires_in: 7200,
+            openid: "or297s-AE3vWu4AUUd-_wUbbP6Z8",
+            refresh_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDdMS-H-VyNPTnN3XJNl8xZsNoomF5QlJBMbCd7dqPOnOwTc7TW-60P3x8CgNB5P6G6tkix-tFwbhGLSapZcvQHw",
+            scope: "snsapi_userinfo"
+        }
 
         $scope.scenes = [
             {
@@ -358,6 +367,8 @@ angular.module('housediary.controllers', ['openfb'])
                 scene: $scope.data.selectedScene
             };
 
+
+
             if (id == 'send-text') {
                 params.text = "人文的东西并不是体现在你看得到的方面，它更多的体现在你看不到的那些方面，它会影响每一个功能，这才是最本质的。但是，对这点可能很多人没有思考过，以为人文的东西就是我们搞一个很小清新的图片什么的。”综合来看，人文的东西其实是贯穿整个产品的脉络，或者说是它的灵魂所在。";
             } else {
@@ -430,10 +441,22 @@ angular.module('housediary.controllers', ['openfb'])
 
                     case 'auth':
                         Wechat.auth("snsapi_userinfo", function (response) {
-                            // you may use response.code to get the access token.
-                            alert(JSON.stringify(response));
+                                // you may use response.code to get the access token.
+                                $scope.data.authData.codeResponse = response;
+                                console.log(JSON.stringify(response));
+                                $http.post(
+                                    "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6bac5262a02e91c4&secret=d4425169eee6926efd8cd0c89376ff38&code="
+                                    + response.code + "&grant_type=authorization_code").
+                                    success(function (data, status, headers, config) {
+                                        console.log(data);
+                                        $scope.data.authData.accessTokenResponse = data;
+                                    }).
+                                    error(function (data, status, headers, config) {
+                                        // called asynchronously if an error occurs
+                                        // or server returns response with an error status.
+                                    });
                         }, function (reason) {
-                            alert("Failed: " + reason);
+                            console.log("Failed: " + JSON.stringify(reason));
                         });
                         return ;
 
