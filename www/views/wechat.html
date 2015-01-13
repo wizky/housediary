@@ -4,6 +4,11 @@
             <div class="item">
                 {{ data.authData }}
             </div>
+            <div class="item item-avatar">
+                <img ng-src="{{data.profile.headimgurl}}">
+                <h2>{{data.profile.nickname}}</h2>
+                <p>{{ data.profile }}</p>
+            </div>
 
             <div class="item item-divider">
                 分享场景: {{data.selectedSceneLabel}}

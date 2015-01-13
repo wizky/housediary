@@ -3,9 +3,10 @@ angular.module('housediary.controllers', ['openfb'])
         $http.defaults.headers.common.Authorization = 'Basic YmVlcDpib29w';
         //$http.defaults.headers.get.NewHeader = 'afsf';
     })
-    //.config(function($httpProvider){
-    //    delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    //})
+    .config(function($httpProvider){
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    })
 
     .controller('MenuCtrl', function ($scope, $state) {
         $scope.menus = [
@@ -262,13 +263,21 @@ angular.module('housediary.controllers', ['openfb'])
             selectedSceneLabel: "会话"
         };
 
-        $scope.data.authData.codeResponse = {"state":"wechat_sdk_demo_test","lang":"zh_CN","country":"us","code":"021682a365d737ba3259b088799d23bc"};
-        $scope.data.authData.accessTokenResponse = {
-            "access_token": "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDfFsym3Xv80xrRYZqdXnhDX7IRpYpVbDMjIZxkvxaH3ZjzhpmE7vVX6Fw3RR7QqbM8renlmunJH0FB61g-Fa0kA",
-            expires_in: 7200,
-            openid: "or297s-AE3vWu4AUUd-_wUbbP6Z8",
-            refresh_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDdMS-H-VyNPTnN3XJNl8xZsNoomF5QlJBMbCd7dqPOnOwTc7TW-60P3x8CgNB5P6G6tkix-tFwbhGLSapZcvQHw",
-            scope: "snsapi_userinfo"
+        $scope.data.authData =
+        {
+            codeResponse: {
+                "state": "wechat_sdk_demo_test",
+                "lang": "zh_CN",
+                "country": "us",
+                "code": "021682a365d737ba3259b088799d23bc"
+            },
+            accessTokenResponse: {
+                access_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDBCi8NUmkc2144AEmkojjgzXCYZtnttXR52FwJeAbtuitDgY8avcv036HeeehZsxrhfMbkDB8PyG8rR1QY30ASQ",
+                expires_in: 7200,
+                openid: "or297s-AE3vWu4AUUd-_wUbbP6Z8",
+                refresh_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDwKlhIEW1HBh58BkeUKJX0J5Ip5sT_QydqDd6LI4ByYeAQlgFeSge33i-oEO1RB3vahH9pTens6pjq-UGJuXrCg",
+                scope: "snsapi_userinfo"
+            }
         }
 
         $scope.scenes = [
@@ -458,8 +467,20 @@ angular.module('housediary.controllers', ['openfb'])
                         }, function (reason) {
                             console.log("Failed: " + JSON.stringify(reason));
                         });
-                        return ;
-
+                        break;
+                    case 'open-profile':
+                        $http.post(
+                            "https://api.weixin.qq.com/sns/userinfo?access_token=" + $scope.data.authData.accessTokenResponse.access_token
+                            + "&openid=" + $scope.data.authData.accessTokenResponse.openid).
+                            success(function (data, status, headers, config) {
+                                console.log(data);
+                                $scope.data.profile = data;
+                            }).
+                            error(function (data, status, headers, config) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            });
+                        return;
                     default:
                         $ionicPopup.alert({
                             title: 'Not supported!',
