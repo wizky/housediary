@@ -19,8 +19,13 @@
                         {
                             "xml": "<feature name=\"Wechat\"><param name=\"android-package\" value=\"xu.li.cordova.wechat.Wechat\" /></feature>",
                             "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AppSettings\"><param name=\"android-package\" value=\"org.apache.cordova.appsettings.AppSettings\" /></feature>",
+                            "count": 1
                         }
-                    ]
+                    ],
+                    "/widget": []
                 }
             },
             "AndroidManifest.xml": {
@@ -43,6 +48,9 @@
             "PACKAGE_NAME": "com.wizky.housediary"
         },
         "xu.li.cordova.wechat": {
+            "PACKAGE_NAME": "com.wizky.housediary"
+        },
+        "com.wizky.cordova.appsettings": {
             "PACKAGE_NAME": "com.wizky.housediary"
         }
     },

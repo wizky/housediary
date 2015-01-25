@@ -39,6 +39,57 @@ angular.module('housediary.controllers', ['openfb'])
                 });
 
         };
+        $scope.wechatLogin = function () {
+            $scope.wechatUser = { authData : {}};
+            $scope.wechatUser.authData =
+            {
+                codeResponse: {
+                    "state": "wechat_sdk_demo_test",
+                    "lang": "zh_CN",
+                    "country": "us",
+                    "code": "021682a365d737ba3259b088799d23bc"
+                },
+                accessTokenResponse: {
+                    access_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDBCi8NUmkc2144AEmkojjgzXCYZtnttXR52FwJeAbtuitDgY8avcv036HeeehZsxrhfMbkDB8PyG8rR1QY30ASQ",
+                    expires_in: 7200,
+                    openid: "or297s-AE3vWu4AUUd-_wUbbP6Z8",
+                    refresh_token: "OezXcEiiBSKSxW0eoylIeAyKHFvAxKfpbnek2nlCY2R0BbgIZAbEXaumA01wB7vDwKlhIEW1HBh58BkeUKJX0J5Ip5sT_QydqDd6LI4ByYeAQlgFeSge33i-oEO1RB3vahH9pTens6pjq-UGJuXrCg",
+                    scope: "snsapi_userinfo"
+                }
+            }
+
+            Wechat.auth("snsapi_userinfo", function (response) {
+                // you may use response.code to get the access token.
+                $scope.wechatUser.authData.codeResponse = response;
+                console.log("Code : " + JSON.stringify(response));
+
+                $http.post(
+                    "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6bac5262a02e91c4&secret=d4425169eee6926efd8cd0c89376ff38&code="
+                    + response.code + "&grant_type=authorization_code").
+                    success(function (data, status, headers, config) {
+                        console.log("Access Token: " + data);
+                        $scope.wechatUser.authData.accessTokenResponse = data;
+                        $http.post(
+                            "https://api.weixin.qq.com/sns/userinfo?access_token=" + $scope.wechatUser.authData.accessTokenResponse.access_token
+                            + "&openid=" + $scope.wechatUser.authData.accessTokenResponse.openid).
+                            success(function (data, status, headers, config) {
+                                console.log(data);
+                                $scope.wechatUser.profile = data;
+                            }).
+                            error(function (data, status, headers, config) {
+                                // called asynchronously if an error occurs
+                                // or server returns response with an error status.
+                            });
+                    }).
+                    error(function (data, status, headers, config) {
+                        // called asynchronously if an error occurs
+                        // or server returns response with an error status.
+                    });
+            }, function (reason) {
+                console.log("Failed: " + JSON.stringify(reason));
+            });
+
+        };
 
         $scope.findFriends = function () {
             OpenFB.get('/' + $scope.user.id + '/friends', {limit: 50})
@@ -449,12 +500,17 @@ angular.module('housediary.controllers', ['openfb'])
                         break;
 
                     case 'auth':
-                        Wechat.auth("snsapi_userinfo", function (response) {
+                        AppSettings.get( function(value) {
+                            console.log("Getting wechatappid: " + value);
+                            $scope.weChatAppId = value.wechatappid;
+                            Wechat.auth("snsapi_userinfo", function (response) {
                                 // you may use response.code to get the access token.
                                 $scope.data.authData.codeResponse = response;
                                 console.log(JSON.stringify(response));
                                 $http.post(
-                                    "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx6bac5262a02e91c4&secret=d4425169eee6926efd8cd0c89376ff38&code="
+                                    "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + $scope.weChatAppId
+                                        //+"wx6bac5262a02e91c4"
+                                    + "&secret=&code="
                                     + response.code + "&grant_type=authorization_code").
                                     success(function (data, status, headers, config) {
                                         console.log(data);
@@ -464,9 +520,13 @@ angular.module('housediary.controllers', ['openfb'])
                                         // called asynchronously if an error occurs
                                         // or server returns response with an error status.
                                     });
-                        }, function (reason) {
-                            console.log("Failed: " + JSON.stringify(reason));
-                        });
+                            }, function (reason) {
+                                console.log("Failed: " + JSON.stringify(reason));
+                            });
+                        }, function(error) {
+                            alert("Error! " + JSON.stringify(error));
+                        }, ["wechatappid"]);
+
                         break;
                     case 'open-profile':
                         $http.post(
