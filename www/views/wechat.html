@@ -1,0 +1,29 @@
+<ion-view view-title="Demo">
+    <ion-content>
+        <div class="list">
+            <div class="item">
+                {{ data.authData }}
+            </div>
+            <div class="item item-avatar">
+                <img ng-src="{{data.profile.headimgurl}}">
+                <h2>{{data.profile.nickname}}</h2>
+                <p>{{ data.profile }}</p>
+            </div>
+
+            <div class="item item-divider">
+                分享场景: {{data.selectedSceneLabel}}
+            </div>
+
+            <ion-radio ng-repeat="scene in scenes" ng-value="scene.value" ng-model="data.selectedScene">
+                {{scene.label}}
+            </ion-radio>
+
+            <div class="item item-divider">功能</div>
+
+            <div class="item" ng-repeat="button in buttons" ng-click="handle('{{button.id}}');">
+                {{button.label}}
+            </div>
+        </div>
+
+    </ion-content>
+</ion-view>

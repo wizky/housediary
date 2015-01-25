@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    xmlns:rim="http://www.blackberry.com/ns/widgets"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.wizky.cordova.appsettings"
+    version="0.1">
+    <name>Settings Plugin</name>
+    <description>Cordova Config.XML settings access Plugin</description>
+    <license>Apache 2.0</license>
+    <keywords>cordova,settings,appsettings,config.xml</keywords>
+
+    <js-module src="www/appsettings.js" name="AppSettings" >
+        <clobbers target="AppSettings" />
+    </js-module>
+
+  <!-- android -->
+  <platform name="android">
+    <config-file target="res/xml/config.xml" parent="/*">
+      <feature name="AppSettings" >
+        <param name="android-package" value="org.apache.cordova.appsettings.AppSettings"/>
+      </feature>
+    </config-file>
+    
+    <source-file src="src/android/AppSettings.java" target-dir="src/org/apache/cordova/appsettings" />
+  </platform>
+
+  <!-- ios -->
+  <platform name="ios">
+    <config-file target="config.xml" parent="/*">
+      <feature name="AppSettings">
+        <param name="ios-package" value="AppSettings"/>
+      </feature>
+    </config-file>
+    
+    <header-file src="src/ios/AppSettings.h" />
+    <source-file src="src/ios/AppSettings.m" />
+  </platform>
+  
+</plugin>
