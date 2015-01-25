@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cd73f51c-e937-43f5-82f4-6c1b6c62d11a" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/README.md" afterPath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/src/android/WXEntryActivity.java" afterPath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/src/android/WXEntryActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/src/android/Wechat.java" afterPath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/src/android/Wechat.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/android.json" afterPath="$PROJECT_DIR$/plugins/android.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/index.html" afterPath="$PROJECT_DIR$/www/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/plugin.xml" afterPath="$PROJECT_DIR$/plugins/xu.li.cordova.wechat/plugin.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/views/userHome.html" afterPath="$PROJECT_DIR$/www/views/userHome.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="housediary.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -68,8 +60,8 @@
       <file leaf-file-name="controllers.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="5.1766467" vertical-offset="4222" max-vertical-offset="8475">
-              <caret line="512" column="47" selection-start-line="512" selection-start-column="47" selection-end-line="512" selection-end-column="47" />
+            <state vertical-scroll-proportion="0.4041916" vertical-offset="7410" max-vertical-offset="8475">
+              <caret line="512" column="79" selection-start-line="512" selection-start-column="47" selection-end-line="512" selection-end-column="79" />
               <folding />
             </state>
           </provider>
@@ -282,8 +274,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/js/controllers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="5.1766467" vertical-offset="4222" max-vertical-offset="8475">
-          <caret line="512" column="47" selection-start-line="512" selection-start-column="47" selection-end-line="512" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.4041916" vertical-offset="7410" max-vertical-offset="8475">
+          <caret line="512" column="79" selection-start-line="512" selection-start-column="47" selection-end-line="512" selection-end-column="79" />
           <folding />
         </state>
       </provider>

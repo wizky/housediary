@@ -510,7 +510,7 @@ angular.module('housediary.controllers', ['openfb'])
                                 $http.post(
                                     "https://api.weixin.qq.com/sns/oauth2/access_token?appid=" + $scope.weChatAppId
                                         //+"wx6bac5262a02e91c4"
-                                    + "&secret=&code="
+                                    + "&secret=d4425169eee6926efd8cd0c89376ff38&code="
                                     + response.code + "&grant_type=authorization_code").
                                     success(function (data, status, headers, config) {
                                         console.log(data);
